@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050505;
+  --foreground: #f4efe5;
+  --surface: #111111;
+  --surface-strong: #171717;
+  --muted: #9ea89f;
+  --line: rgba(244, 239, 229, 0.12);
+  --line-strong: rgba(244, 239, 229, 0.24);
+  --accent: #d2a95f;
+  --accent-strong: #e3bb73;
+  --accent-deep: #8c6b2e;
+  --success: #3ecf8e;
+  --danger: #ff6b6b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Segoe UI", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "Segoe UI", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.datetime-input {
+  color-scheme: dark;
+  padding-right: 3rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.datetime-input:hover {
+  border-color: rgba(255, 255, 255, 0.38);
+}
+
+.datetime-input:focus {
+  border-color: rgba(227, 187, 115, 0.9);
+  box-shadow: 0 0 0 1px rgba(227, 187, 115, 0.2);
+}
+
+.datetime-input::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.15);
+  opacity: 1;
+  cursor: pointer;
+}
+
+.datetime-input::-webkit-datetime-edit,
+.datetime-input::-webkit-datetime-edit-text,
+.datetime-input::-webkit-datetime-edit-month-field,
+.datetime-input::-webkit-datetime-edit-day-field,
+.datetime-input::-webkit-datetime-edit-year-field,
+.datetime-input::-webkit-datetime-edit-hour-field,
+.datetime-input::-webkit-datetime-edit-minute-field {
+  color: #ffffff;
+}
+
+.agendamento-date-input {
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.agendamento-date-input[data-empty="true"] {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  caret-color: transparent;
+}
+
+.agendamento-date-input[data-empty="true"]::-webkit-datetime-edit,
+.agendamento-date-input[data-empty="true"]::-webkit-datetime-edit-text,
+.agendamento-date-input[data-empty="true"]::-webkit-datetime-edit-month-field,
+.agendamento-date-input[data-empty="true"]::-webkit-datetime-edit-day-field,
+.agendamento-date-input[data-empty="true"]::-webkit-datetime-edit-year-field {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.agendamento-date-input::-webkit-calendar-picker-indicator {
+  margin-right: 0;
+  padding: 0.2rem;
+  border-radius: 9999px;
+  background-color: transparent;
+}
+
+select {
+  color-scheme: dark;
+}
+
+select option,
+select optgroup {
+  background-color: #f4efe5;
+  color: #111111;
+}
+
+.brand-shell {
+  position: relative;
+}
+
+.brand-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: none;
+  pointer-events: none;
+}
+
+a,
+button {
+  transition: all 0.18s ease;
+}
+
+/* Focus visible */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(210, 169, 95, 0.65);
+  outline-offset: 1px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(210, 169, 95, 0.65);
+  outline-offset: 2px;
+  border-radius: 9999px;
+}
+
+/* Fade-in animation for sections that appear conditionally */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.28s ease forwards;
+}
