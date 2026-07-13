@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import barbershop from "@/barbershop.config";
 
 type AdminShellProps = {
   children: React.ReactNode;
@@ -116,7 +117,7 @@ export function AdminShell({ children }: AdminShellProps) {
             <div className="flex flex-col gap-2">
               <div className="flex flex-wrap items-center gap-3">
                 <Link href="/admin" className="text-base font-semibold uppercase tracking-[0.24em] text-white sm:text-lg">
-                  Imperio Ferreira
+                  {barbershop.nome}
                 </Link>
                 <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[var(--accent-strong)]">
                   Painel administrativo

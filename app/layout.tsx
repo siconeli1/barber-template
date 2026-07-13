@@ -1,26 +1,28 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import "./globals.css";
 import { CustomerAccountBar } from "@/app/_components/CustomerAccountBar";
 import { CustomerSessionProvider } from "@/lib/use-customer-session";
+import { buildThemeStyle } from "@/lib/theme";
+import barbershop from "@/barbershop.config";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://imperio-ferreira.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? barbershop.siteUrl;
 const metadataBase = new URL(siteUrl);
 
 export const metadata: Metadata = {
   metadataBase,
-  title: "Imperio Ferreira",
-  description: "Agendamento online e area administrativa da Imperio Ferreira",
+  title: barbershop.nome,
+  description: barbershop.descricao,
   openGraph: {
-    title: "Imperio Ferreira",
-    description: "Agendamento online e area administrativa da Imperio Ferreira",
+    title: barbershop.nome,
+    description: barbershop.descricao,
     url: "/",
-    siteName: "Imperio Ferreira",
+    siteName: barbershop.nome,
     images: [
       {
-        url: "/imperio-logo.jpg",
+        url: barbershop.ogImage,
         width: 1200,
         height: 630,
-        alt: "Imperio Ferreira",
+        alt: barbershop.nome,
       },
     ],
     locale: "pt_BR",
@@ -28,9 +30,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Imperio Ferreira",
-    description: "Agendamento online e area administrativa da Imperio Ferreira",
-    images: ["/imperio-logo.jpg"],
+    title: barbershop.nome,
+    description: barbershop.descricao,
+    images: [barbershop.ogImage],
   },
 };
 
@@ -40,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" style={buildThemeStyle(barbershop.tema)}>
       <body className="antialiased">
         <CustomerSessionProvider>
           <CustomerAccountBar />

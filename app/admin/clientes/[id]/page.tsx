@@ -490,7 +490,7 @@ function PlanoOptionCard({
       onClick={onClick}
       className={`rounded-[24px] border p-4 text-left transition ${
         selected
-          ? "border-[var(--accent)] bg-[linear-gradient(180deg,rgba(210,169,95,0.22),rgba(210,169,95,0.12))] shadow-[0_14px_28px_rgba(210,169,95,0.12)]"
+          ? "border-[var(--accent)] bg-[linear-gradient(180deg,rgba(var(--accent-rgb),0.22),rgba(var(--accent-rgb),0.12))] shadow-[0_14px_28px_rgba(var(--accent-rgb),0.12)]"
           : "border-white/10 bg-white/[0.03] hover:border-white/25 hover:bg-white/[0.05]"
       }`}
     >

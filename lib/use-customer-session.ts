@@ -10,9 +10,12 @@ import {
   type ReactNode,
 } from "react";
 import { normalizePhone } from "@/lib/phone";
+import barbershop from "@/barbershop.config";
 
-const STORAGE_KEY = "imperio.cliente";
-const SESSION_EVENT = "imperio-customer-session";
+export const CUSTOMER_STORAGE_KEY = `${barbershop.slug}.cliente`;
+export const CUSTOMER_SESSION_EVENT = `${barbershop.slug}-customer-session`;
+const STORAGE_KEY = CUSTOMER_STORAGE_KEY;
+const SESSION_EVENT = CUSTOMER_SESSION_EVENT;
 let cachedRawProfile: string | null | undefined;
 let cachedParsedProfile: CustomerProfile | null = null;
 

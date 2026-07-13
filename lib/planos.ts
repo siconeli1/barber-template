@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import barbershop from "@/barbershop.config";
 
 export type Plano = {
   id: string;
@@ -12,52 +13,17 @@ export type Plano = {
   ordem: number;
 };
 
-const PLANOS_FALLBACK: Plano[] = [
-  {
-    id: "bronze-corte",
-    nome: "Plano Bronze Corte",
-    descricao: "4 cortes no ciclo mensal",
-    preco: 100,
-    cortes_incluidos: 4,
-    barbas_incluidas: 0,
-    sobrancelhas_incluidas: 0,
-    ativo: true,
-    ordem: 1,
-  },
-  {
-    id: "bronze-barba",
-    nome: "Plano Bronze Barba",
-    descricao: "4 barbas no ciclo mensal",
-    preco: 60,
-    cortes_incluidos: 0,
-    barbas_incluidas: 4,
-    sobrancelhas_incluidas: 0,
-    ativo: true,
-    ordem: 2,
-  },
-  {
-    id: "prata",
-    nome: "Plano Prata",
-    descricao: "4 cortes e 4 sobrancelhas no ciclo mensal",
-    preco: 110,
-    cortes_incluidos: 4,
-    barbas_incluidas: 0,
-    sobrancelhas_incluidas: 4,
-    ativo: true,
-    ordem: 3,
-  },
-  {
-    id: "ouro",
-    nome: "Plano Ouro",
-    descricao: "4 barbas, 4 cortes e 4 sobrancelhas no ciclo mensal",
-    preco: 150,
-    cortes_incluidos: 4,
-    barbas_incluidas: 4,
-    sobrancelhas_incluidas: 4,
-    ativo: true,
-    ordem: 4,
-  },
-];
+const PLANOS_FALLBACK: Plano[] = barbershop.planos.map((plano, index) => ({
+  id: plano.id,
+  nome: plano.nome,
+  descricao: plano.descricao,
+  preco: plano.preco,
+  cortes_incluidos: plano.cortes,
+  barbas_incluidas: plano.barbas,
+  sobrancelhas_incluidas: plano.sobrancelhas,
+  ativo: true,
+  ordem: index + 1,
+}));
 
 export async function listarPlanosAtivos() {
   try {

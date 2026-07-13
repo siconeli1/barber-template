@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import barbershop from "@/barbershop.config";
 
 export interface Servico {
   id: string;
@@ -17,78 +18,22 @@ export type ServicePlanCoverage = {
   sobrancelha: number;
 };
 
-const SERVICOS_FALLBACK: Servico[] = [
-  {
-    id: "barba",
-    codigo: "barba",
-    nome: "Barba",
-    categoria: "barba",
-    duracao_minutos: 30,
-    preco: 30,
-    ordem: 1,
-    ativo: true,
-  },
-  {
-    id: "acabamento",
-    codigo: "acabamento",
-    nome: "Acabamento",
-    categoria: "outro",
-    duracao_minutos: 10,
-    preco: 15,
-    ordem: 2,
-    ativo: true,
-  },
-  {
-    id: "cabelo-barba",
-    codigo: "cabelo-barba",
-    nome: "Cabelo + barba",
-    categoria: "combo",
-    duracao_minutos: 60,
-    preco: 70,
-    ordem: 3,
-    ativo: true,
-  },
-  {
-    id: "combo-cabelo-barba-sobrancelha",
-    codigo: "combo-cabelo-barba-sobrancelha",
-    nome: "Combo cabelo + barba + sobrancelha",
-    categoria: "combo",
-    duracao_minutos: 60,
-    preco: 75,
-    ordem: 4,
-    ativo: true,
-  },
-  {
-    id: "corte-de-cabelo",
-    codigo: "corte-de-cabelo",
-    nome: "Corte de cabelo",
-    categoria: "corte",
-    duracao_minutos: 30,
-    preco: 40,
-    ordem: 5,
-    ativo: true,
-  },
-  {
-    id: "corte-cabelo-sobrancelha",
-    codigo: "corte-cabelo-sobrancelha",
-    nome: "Corte de cabelo + sobrancelha",
-    categoria: "combo",
-    duracao_minutos: 30,
-    preco: 50,
-    ordem: 6,
-    ativo: true,
-  },
-  {
-    id: "depilacao-nariz",
-    codigo: "depilacao-nariz",
-    nome: "Depilacao de nariz",
-    categoria: "outro",
-    duracao_minutos: 10,
-    preco: 20,
-    ordem: 7,
-    ativo: true,
-  },
-];
+const SERVICOS_FALLBACK: Servico[] = barbershop.servicos.map((servico, index) => ({
+  id: servico.id,
+  codigo: servico.id,
+  nome: servico.nome,
+  categoria: servico.categoria,
+  duracao_minutos: servico.duracaoMinutos,
+  preco: servico.preco,
+  ordem: index + 1,
+  ativo: true,
+}));
+
+const COBERTURA_POR_SERVICO = new Map<string, ServicePlanCoverage>(
+  barbershop.servicos
+    .filter((servico) => servico.coberturaPlano)
+    .map((servico) => [servico.id.toLowerCase(), servico.coberturaPlano!])
+);
 
 async function loadServicosFromDatabase() {
   const { data, error } = await supabase
@@ -136,29 +81,21 @@ export async function encontrarServicosAtivosPorIds(serviceIds: string[]) {
 export function getServicePlanCoverage(servico: Pick<Servico, "id" | "codigo" | "categoria">): ServicePlanCoverage {
   const key = String(servico.id || servico.codigo).trim().toLowerCase();
 
-  switch (key) {
-    case "corte-de-cabelo":
-      return { corte: 1, barba: 0, sobrancelha: 0 };
-    case "barba":
-      return { corte: 0, barba: 1, sobrancelha: 0 };
-    case "corte-cabelo-sobrancelha":
-      return { corte: 1, barba: 0, sobrancelha: 1 };
-    case "cabelo-barba":
-      return { corte: 1, barba: 1, sobrancelha: 0 };
-    case "combo-cabelo-barba-sobrancelha":
-      return { corte: 1, barba: 1, sobrancelha: 1 };
-    default:
-      if (servico.categoria === "corte") {
-        return { corte: 1, barba: 0, sobrancelha: 0 };
-      }
-      if (servico.categoria === "barba") {
-        return { corte: 0, barba: 1, sobrancelha: 0 };
-      }
-      if (servico.categoria === "sobrancelha") {
-        return { corte: 0, barba: 0, sobrancelha: 1 };
-      }
-      return { corte: 0, barba: 0, sobrancelha: 0 };
+  const coberturaConfigurada = COBERTURA_POR_SERVICO.get(key);
+  if (coberturaConfigurada) {
+    return coberturaConfigurada;
   }
+
+  if (servico.categoria === "corte") {
+    return { corte: 1, barba: 0, sobrancelha: 0 };
+  }
+  if (servico.categoria === "barba") {
+    return { corte: 0, barba: 1, sobrancelha: 0 };
+  }
+  if (servico.categoria === "sobrancelha") {
+    return { corte: 0, barba: 0, sobrancelha: 1 };
+  }
+  return { corte: 0, barba: 0, sobrancelha: 0 };
 }
 
 export function hasPlanCoverage(servico: Pick<Servico, "id" | "codigo" | "categoria">) {

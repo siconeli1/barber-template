@@ -1,3 +1,5 @@
+import barbershop from '@/barbershop.config'
+
 export type DailyPeriod = {
   start: string
   end: string
@@ -7,29 +9,15 @@ export type DailySchedule = {
   periods: DailyPeriod[]
 }
 
-export const DAILY_SCHEDULE: Record<number, DailySchedule> = {
-  1: {
-    periods: [{ start: '09:00', end: '19:00' }],
-  },
-  2: {
-    periods: [{ start: '09:00', end: '19:00' }],
-  },
-  3: {
-    periods: [{ start: '09:00', end: '19:00' }],
-  },
-  4: {
-    periods: [{ start: '09:00', end: '20:00' }],
-  },
-  5: {
-    periods: [{ start: '08:00', end: '20:00' }],
-  },
-  6: {
-    periods: [{ start: '09:00', end: '15:00' }],
-  },
-}
+export const DAILY_SCHEDULE: Record<number, DailySchedule> = Object.fromEntries(
+  Object.entries(barbershop.horarios).map(([day, periodos]) => [
+    Number(day),
+    { periods: periodos.map((periodo) => ({ start: periodo.inicio, end: periodo.fim })) },
+  ])
+)
 
 export const AGENDA_CONFIG = {
-  timezone: 'America/Sao_Paulo',
+  timezone: barbershop.timezone,
   openDays: Object.keys(DAILY_SCHEDULE).map((d) => Number(d)),
   slotMinutes: 30,
   visibleSlotMinutes: 30,

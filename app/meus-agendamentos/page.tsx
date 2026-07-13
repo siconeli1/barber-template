@@ -449,7 +449,7 @@ function AgendamentoCard({
     <div
       className={`rounded-[28px] border p-6 transition ${
         isProximo
-          ? "border-[var(--accent)]/40 bg-[linear-gradient(180deg,rgba(210,169,95,0.07),rgba(0,0,0,0.2))]"
+          ? "border-[var(--accent)]/40 bg-[linear-gradient(180deg,rgba(var(--accent-rgb),0.07),rgba(0,0,0,0.2))]"
           : "border-white/10 bg-white/[0.03]"
       }`}
     >

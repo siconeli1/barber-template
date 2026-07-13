@@ -412,7 +412,7 @@ export function QuickAddModal({
                   <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3">
                     <div className="relative grid grid-cols-2 rounded-full border border-white/10 bg-black/25 p-1">
                       <span
-                        className={`absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-full bg-[var(--accent)] shadow-[0_10px_24px_rgba(210,169,95,0.28)] transition-transform duration-200 ${
+                        className={`absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-full bg-[var(--accent)] shadow-[0_10px_24px_rgba(var(--accent-rgb),0.28)] transition-transform duration-200 ${
                           cobrancaMode === "plano" ? "translate-x-0" : "translate-x-full"
                         }`}
                       />

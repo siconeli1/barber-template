@@ -173,7 +173,7 @@ export function AdminConfirmDialog({
     tone === "primary"
       ? {
           badge: "border-[var(--accent)]/35 bg-[var(--accent)]/15 text-[var(--accent-strong)]",
-          pulse: "bg-[radial-gradient(circle_at_center,rgba(210,169,95,0.28),rgba(210,169,95,0))]",
+          pulse: "bg-[radial-gradient(circle_at_center,rgba(var(--accent-rgb),0.28),rgba(var(--accent-rgb),0))]",
           confirmTone: "primary" as const,
         }
       : tone === "secondary"

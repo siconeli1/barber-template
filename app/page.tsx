@@ -3,15 +3,14 @@ import Link from "next/link";
 import { listarPlanosAtivos } from "@/lib/planos";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 import { HomeReturningCustomer } from "@/app/_components/HomeReturningCustomer";
+import { formatRotinaSemanal } from "@/lib/horarios-display";
+import barbershop from "@/barbershop.config";
 
-const ENDERECO = "Av. dos Arnaldos, 3407, Antônia Franco, Fernandópolis";
-const WHATSAPP_LOJA = "+55 17 98131-4724";
-const ROTINA = [
-  "Segunda a quarta: 09:00 às 19:00",
-  "Quinta: 09:00 às 20:00",
-  "Sexta: 08:00 às 20:00",
-  "Sábado: 09:00 às 15:00",
-];
+const ROTINA = formatRotinaSemanal(barbershop.horarios);
+const REDES_SOCIAIS = [
+  { label: "Instagram", url: barbershop.redesSociais.instagram },
+  { label: "Facebook", url: barbershop.redesSociais.facebook },
+].filter((rede): rede is { label: string; url: string } => Boolean(rede.url));
 
 function formatarPreco(valor: number) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -50,8 +49,8 @@ export default async function Home() {
             <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
               <div className="rounded-[28px] border border-white/10 bg-black/20 p-5 shadow-[0_16px_50px_rgba(0,0,0,0.35)]">
                 <Image
-                  src="/imperio-logo.jpg"
-                  alt="Logo Império Ferreira"
+                  src={barbershop.logo}
+                  alt={`Logo ${barbershop.nome}`}
                   width={320}
                   height={320}
                   priority
@@ -59,7 +58,7 @@ export default async function Home() {
                 />
               </div>
 
-              <p className="mt-6 text-xs uppercase tracking-[0.3em] text-[var(--accent-strong)]">Barbearia Império Ferreira</p>
+              <p className="mt-6 text-xs uppercase tracking-[0.3em] text-[var(--accent-strong)]">{barbershop.nomeExibicao}</p>
             </div>
 
             <div className="grid gap-5">
@@ -115,7 +114,7 @@ export default async function Home() {
               const itens = buildPlanoItens(plano);
               const isDestaque = plano.id === planoDestaque?.id && planos.length > 1;
               const whatsappLink = getWhatsAppLink(
-                WHATSAPP_LOJA,
+                barbershop.whatsapp,
                 `Olá, gostaria de assinar o plano mensal ${plano.nome}.`
               );
 
@@ -124,7 +123,7 @@ export default async function Home() {
                   key={plano.id}
                   className={`rounded-[30px] border p-5 sm:p-6 ${
                     isDestaque
-                      ? "border-[var(--accent)]/40 bg-[linear-gradient(180deg,rgba(210,169,95,0.1),rgba(255,255,255,0.01))]"
+                      ? "border-[var(--accent)]/40 bg-[linear-gradient(180deg,rgba(var(--accent-rgb),0.1),rgba(255,255,255,0.01))]"
                       : "border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))]"
                   }`}
                 >
@@ -168,7 +167,22 @@ export default async function Home() {
 
           <div className="mt-6 w-full rounded-[26px] border border-white/10 bg-black/25 px-5 py-4 text-center">
             <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent-strong)]">Endereço</p>
-            <p className="mt-3 text-sm leading-6 text-[var(--foreground)] sm:text-base">{ENDERECO}</p>
+            <p className="mt-3 text-sm leading-6 text-[var(--foreground)] sm:text-base">{barbershop.endereco}</p>
+            {REDES_SOCIAIS.length > 0 ? (
+              <div className="mt-3 flex items-center justify-center gap-3">
+                {REDES_SOCIAIS.map((rede) => (
+                  <a
+                    key={rede.label}
+                    href={rede.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-white/15 bg-white/[0.03] px-4 py-1.5 text-xs font-semibold text-white hover:bg-white/[0.08]"
+                  >
+                    {rede.label}
+                  </a>
+                ))}
+              </div>
+            ) : null}
           </div>
         </section>
       </div>
