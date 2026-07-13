@@ -45,6 +45,15 @@ const magnata: BarbershopConfig = {
     6: [{ inicio: "08:00", fim: "16:00" }],
   },
 
+  barbeiros: [
+    {
+      id: "barbeiro",
+      nome: "Barbeiro",
+      login: "admin",
+      cargo: "socio",
+    },
+  ],
+
   servicos: [
     {
       id: "corte-de-cabelo",

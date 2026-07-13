@@ -1,6 +1,17 @@
 # Barber Template
 
-Template de site de agendamento para barbearias (Next.js App Router + Supabase), derivado do projeto da Barbearia Imperio Ferreira. Toda a marca — nome, logo, cores, fonte, servicos, precos, horarios, WhatsApp, endereco e redes sociais — vem de um unico arquivo de configuracao. Nenhum componente escreve dado de negocio direto.
+Template de site de agendamento para barbearias (Next.js App Router), derivado do projeto da Barbearia Imperio Ferreira. Toda a marca — nome, logo, cores, fonte, servicos, precos, horarios, WhatsApp, endereco e redes sociais — vem de um unico arquivo de configuracao. Nenhum componente escreve dado de negocio direto.
+
+## Modo demo (padrao, sem banco de dados)
+
+Sem nenhuma variavel de ambiente o site roda em **modo demo**: clientes, agendamentos, bloqueios, assinaturas e financeiro sao gravados em `data/demo-db.json` (criado automaticamente, fora do git). Nao ha conexao com banco externo — ideal para mostrar o sistema a novos leads.
+
+- **Login do painel admin**: usuario `admin`, senha `1234`
+- **Barbeiro**: um unico barbeiro generico chamado "Barbeiro" (definido em `barbeiros` no config)
+- Para resetar a demo, apague `data/demo-db.json`
+- Em hospedagem com filesystem somente leitura (ex.: Vercel), os dados vivem em memoria e resetam a cada cold start — comportamento aceitavel para demo
+
+Para producao com banco real, defina `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` e `ADMIN_SESSION_SECRET` (ver `.env.example`) e rode as migrations de `db/migrations/` — o mesmo codigo passa a usar o Supabase do cliente.
 
 ## Stack
 
@@ -22,7 +33,7 @@ As cores e fontes do config viram CSS variables (`--accent`, `--background`, `--
 ## Criando a demo de um novo cliente
 
 1. **Logo**: salve a logo em `public/logos/<cliente>.jpg` (ou `.svg`/`.png`).
-2. **Config**: copie `configs/magnata.ts` para `configs/<cliente>.ts` e preencha nome, `slug` (sem espacos/acentos — isola sessoes no navegador), WhatsApp, endereco, redes sociais, cores, fonte, horarios, servicos e planos.
+2. **Config**: copie `configs/magnata.ts` para `configs/<cliente>.ts` e preencha nome, `slug` (sem espacos/acentos — isola sessoes no navegador), WhatsApp, endereco, redes sociais, cores, fonte, horarios, barbeiros, servicos e planos.
 3. **Ative**: em `barbershop.config.ts`, troque o import:
 
    ```ts
@@ -31,13 +42,13 @@ As cores e fontes do config viram CSS variables (`--accent`, `--background`, `--
 
 4. **Favicon** (opcional): substitua `app/favicon.ico`.
 5. **Confira**: `npm run dev` e revise home, /agendar e /admin.
-6. **Deploy**: crie um projeto no Vercel apontando para o repo/branch da demo e defina as variaveis de ambiente abaixo (mais `NEXT_PUBLIC_SITE_URL` com a URL final). O `vercel.json` ja roda `npm run verify` antes de cada deploy.
+6. **Deploy**: crie um projeto no Vercel apontando para o repo/branch da demo. Para demo nenhuma variavel de ambiente e necessaria (opcionalmente `NEXT_PUBLIC_SITE_URL` com a URL final); para producao configure o Supabase (ver "Modo demo" acima). O `vercel.json` ja roda `npm run verify` antes de cada deploy.
 
 Para dados reais (servicos, planos, barbeiros) em producao, rode as migrations de [`db/migrations/`](db/migrations/) num projeto Supabase proprio do cliente e cadastre o catalogo nas tabelas — o config cobre a demo e o fallback.
 
 ## Variaveis de ambiente
 
-Crie um arquivo `.env.local` com:
+Nenhuma e necessaria no modo demo. Para producao, crie `.env.local` (ver `.env.example`):
 
 ```env
 SUPABASE_URL=

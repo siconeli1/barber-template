@@ -41,6 +41,15 @@ const imperioFerreira: BarbershopConfig = {
     6: [{ inicio: "09:00", fim: "15:00" }],
   },
 
+  barbeiros: [
+    {
+      id: "barbeiro",
+      nome: "Barbeiro",
+      login: "admin",
+      cargo: "socio",
+    },
+  ],
+
   servicos: [
     {
       id: "barba",

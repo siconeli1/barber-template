@@ -34,9 +34,9 @@ test.describe("Admin login", () => {
         contentType: "application/json",
         body: JSON.stringify({
           barbeiro: {
-            id: "cantelle",
-            nome: "Cantelle",
-            login: "lucas",
+            id: "barbeiro-1",
+            nome: "Barbeiro 1",
+            login: "admin",
             cargo: "socio",
           },
         }),
@@ -49,8 +49,8 @@ test.describe("Admin login", () => {
         contentType: "application/json",
         body: JSON.stringify({
           barbeiros: [
-            { id: "cantelle", nome: "Cantelle" },
-            { id: "ryan", nome: "Ryan" },
+            { id: "barbeiro-1", nome: "Barbeiro 1" },
+            { id: "barbeiro-2", nome: "Barbeiro 2" },
           ],
         }),
       });
@@ -66,8 +66,8 @@ test.describe("Admin login", () => {
 
     await page.goto("/admin/login");
 
-    await page.getByPlaceholder("Login").fill("lucas");
-    await page.getByPlaceholder("Senha").fill("ferreira");
+    await page.getByPlaceholder("Login").fill("admin");
+    await page.getByPlaceholder("Senha").fill("1234");
     await page.getByRole("button", { name: "Entrar no painel" }).click();
 
     await expect(page).toHaveURL(/\/admin\/login\?next=%2Fadmin$/);

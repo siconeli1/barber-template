@@ -124,10 +124,8 @@ ALTER TABLE public.horarios_customizados
 INSERT INTO public.barbeiros (id, nome, slug, login, senha_hash, cargo, ativo, ordem, foto_url)
 VALUES
   -- Hashes de bootstrap aleatorios evitam expor credenciais seed no repositorio.
-  ('lucas-cantelle', 'Cantelle', 'lucas-cantelle', 'lucas', md5(random()::text || clock_timestamp()::text || 'lucas-cantelle'), 'socio', true, 1, null),
-  ('alexandre-albertini', 'Xandy', 'alexandre-albertini', 'alexandre', md5(random()::text || clock_timestamp()::text || 'alexandre-albertini'), 'barbeiro', true, 2, null),
-  ('ryan-ferreira', 'Ryan', 'ryan-ferreira', 'ryan', md5(random()::text || clock_timestamp()::text || 'ryan-ferreira'), 'socio', true, 3, null),
-  ('peixoto', 'Peixoto', 'peixoto', 'peixoto', md5(random()::text || clock_timestamp()::text || 'peixoto'), 'barbeiro', true, 4, null)
+  -- Ajuste os barbeiros conforme o barbershop.config.ts do cliente.
+  ('barbeiro', 'Barbeiro', 'barbeiro', 'admin', md5(random()::text || clock_timestamp()::text || 'barbeiro'), 'socio', true, 1, null)
 ON CONFLICT (id) DO UPDATE SET
   nome = EXCLUDED.nome,
   slug = EXCLUDED.slug,

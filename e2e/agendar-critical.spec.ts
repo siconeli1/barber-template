@@ -35,7 +35,7 @@ test.describe("Agendamento - fluxo critico", () => {
     await page.locator("aside").getByRole("button", { name: "Confirmar agendamento" }).click();
 
     await expect(page.getByText("Seu atendimento")).toBeVisible();
-    await expect(page.getByText(/Barbeiro:\s*Cantelle/)).toBeVisible();
+    await expect(page.getByText(/Barbeiro:\s*Barbeiro 1/)).toBeVisible();
 
     expect(reservaBody).not.toBeNull();
     expect(reservaBody?.confirmar_avulso).toBeFalsy();

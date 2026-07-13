@@ -1,3 +1,5 @@
+import { DEMO_MODE } from "@/lib/demo-mode";
+
 const ADMIN_COOKIE_NAME = "admin_session";
 const DEFAULT_MAX_AGE_SECONDS = 60 * 60 * 24;
 
@@ -12,11 +14,17 @@ export type AdminSessionPayload = {
 function getSessionSecret() {
   const secret = process.env.ADMIN_SESSION_SECRET;
 
-  if (!secret) {
-    throw new Error("ADMIN_SESSION_SECRET deve estar definido.");
+  if (secret) {
+    return secret;
   }
 
-  return secret;
+  // Em modo demo (sem Supabase) o template funciona sem nenhuma variavel de
+  // ambiente; fora dele, o secret continua obrigatorio.
+  if (DEMO_MODE) {
+    return "barber-template-demo-secret";
+  }
+
+  throw new Error("ADMIN_SESSION_SECRET deve estar definido.");
 }
 
 function toHex(buffer: ArrayBuffer) {

@@ -62,6 +62,17 @@ export type RedesSociais = {
   facebook?: string;
 };
 
+export type BarbeiroConfig = {
+  /** Identificador estavel (sem espacos/acentos), usado como id no banco. */
+  id: string;
+  /** Nome exibido nas telas de agendamento e no painel. */
+  nome: string;
+  /** Login do painel administrativo. */
+  login: string;
+  /** "socio" enxerga financeiro e agenda geral; "barbeiro" so a propria agenda. */
+  cargo: "socio" | "barbeiro";
+};
+
 export type BarbershopConfig = {
   /** Nome curto da barbearia, usado em titulos, headers e mensagens. */
   nome: string;
@@ -96,6 +107,12 @@ export type BarbershopConfig = {
    * Dias ausentes sao considerados fechados.
    */
   horarios: Record<number, Periodo[]>;
+
+  /**
+   * Barbeiros autorizados a acessar o painel. No modo demo (sem Supabase),
+   * eles sao criados automaticamente com a senha demo (ver lib/demo-mode.ts).
+   */
+  barbeiros: BarbeiroConfig[];
 
   /** Catalogo de servicos (fallback quando o banco nao responde ou esta vazio). */
   servicos: ServicoConfig[];
