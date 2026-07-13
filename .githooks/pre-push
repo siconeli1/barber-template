@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "Running verification suite before push..."
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Set-Location '$PWD'; npm run verify"
+status=$?
+
+if [ $status -ne 0 ]; then
+  echo "Verification failed. Push aborted."
+  exit $status
+fi
