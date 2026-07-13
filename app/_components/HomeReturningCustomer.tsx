@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
+import { CUSTOMER_SESSION_EVENT, CUSTOMER_STORAGE_KEY } from "@/lib/use-customer-session";
 
 type SessionData = { id: string; nome: string; telefone: string };
 
@@ -14,7 +15,7 @@ function readCustomerSession(): SessionData | null {
   }
 
   try {
-    const raw = localStorage.getItem("imperio.cliente");
+    const raw = localStorage.getItem(CUSTOMER_STORAGE_KEY);
     if (raw === cachedRawSession) {
       return cachedParsedSession;
     }
@@ -47,7 +48,7 @@ function subscribeToCustomerSession(onStoreChange: () => void) {
   }
 
   const handleStorage = (event: StorageEvent) => {
-    if (event.key === "imperio.cliente") {
+    if (event.key === CUSTOMER_STORAGE_KEY) {
       onStoreChange();
     }
   };
@@ -57,11 +58,11 @@ function subscribeToCustomerSession(onStoreChange: () => void) {
   };
 
   window.addEventListener("storage", handleStorage);
-  window.addEventListener("imperio-customer-session", handleCustom);
+  window.addEventListener(CUSTOMER_SESSION_EVENT, handleCustom);
 
   return () => {
     window.removeEventListener("storage", handleStorage);
-    window.removeEventListener("imperio-customer-session", handleCustom);
+    window.removeEventListener(CUSTOMER_SESSION_EVENT, handleCustom);
   };
 }
 

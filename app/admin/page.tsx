@@ -9,6 +9,7 @@ import type { StatusAgendamento, StatusAtendimento, StatusPagamento } from "@/li
 import { getWhatsAppLink } from "@/lib/whatsapp";
 import { useAutoDismissState } from "@/lib/use-auto-dismiss-state";
 import { buildAgendaTimelineTimes, isExtraAgendaTimelineSlot } from "@/lib/agenda-timeline";
+import barbershop from "@/barbershop.config";
 import {
   AdminActionButton,
   AdminConfirmDialog,
@@ -589,7 +590,7 @@ export default function AdminAgendaPage() {
                   {itens.map((item) => {
                     const expanded = expandedAgendaItemId === item.id;
                     const meta = buildStatusMeta(item, agora);
-                    const whatsappLink = getWhatsAppLink(item.celular_cliente, `Olá ${item.nome_cliente}, sobre seu horário na Império Ferreira.`);
+                    const whatsappLink = getWhatsAppLink(item.celular_cliente, `Olá ${item.nome_cliente}, sobre seu horário na ${barbershop.nome}.`);
 
                     return (
                       <div key={item.id} className="rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
@@ -783,7 +784,7 @@ function AgendaStartCard({
   onCancelar: () => void;
 }) {
   const meta = buildStatusMeta(item, agora);
-  const whatsappLink = getWhatsAppLink(item.celular_cliente, `Olá ${item.nome_cliente}, sobre seu horário na Império Ferreira.`);
+  const whatsappLink = getWhatsAppLink(item.celular_cliente, `Olá ${item.nome_cliente}, sobre seu horário na ${barbershop.nome}.`);
 
   return (
     <div className="overflow-hidden rounded-[20px] border border-white/10 bg-[rgba(4,7,6,0.82)]">

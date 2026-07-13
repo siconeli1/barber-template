@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminToast } from "@/app/admin/_components/AdminUi";
 import { useAutoDismissState } from "@/lib/use-auto-dismiss-state";
+import barbershop from "@/barbershop.config";
 
 const PILARES = [
   "Agenda organizada em uma tela",
@@ -49,7 +50,7 @@ export default function AdminLoginPage() {
     <main className="min-h-screen bg-[var(--background)] text-white">
       <div className="mx-auto grid min-h-screen max-w-6xl items-center gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-12">
         <section className="order-2 rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.16))] p-8 lg:order-1 lg:p-12">
-          <p className="text-xs uppercase tracking-[0.3em] text-[var(--accent-strong)]">Império Ferreira</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-[var(--accent-strong)]">{barbershop.nome}</p>
           <h1 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl">Painel administrativo da barbearia.</h1>
           <p className="mt-5 max-w-xl text-base leading-8 text-[var(--muted)] sm:text-lg">
             Cada barbeiro entra com a própria conta para acompanhar agenda, bloqueios, marcações manuais, clientes, financeiro e planos.

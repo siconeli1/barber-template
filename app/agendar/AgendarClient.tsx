@@ -508,7 +508,7 @@ export default function AgendarClient({ initialServicos, initialBarbeiros, initi
         <div className="pointer-events-none fixed inset-x-0 top-[110px] z-40 sm:hidden">
           <div className="h-[3px] w-full bg-black/35">
             <div
-              className="h-full bg-[var(--accent)] shadow-[0_0_12px_rgba(210,169,95,0.55)] transition-all duration-300 ease-out"
+              className="h-full bg-[var(--accent)] shadow-[0_0_12px_rgba(var(--accent-rgb),0.55)] transition-all duration-300 ease-out"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -670,7 +670,7 @@ export default function AgendarClient({ initialServicos, initialBarbeiros, initi
                           onClick={() => setServicoId(servico.id)}
                           className={`rounded-[24px] border p-4 text-left ${
                             ativo
-                              ? "border-[var(--accent)] bg-[linear-gradient(180deg,var(--accent),var(--accent-strong))] text-black shadow-[0_16px_30px_rgba(210,169,95,0.18)]"
+                              ? "border-[var(--accent)] bg-[linear-gradient(180deg,var(--accent),var(--accent-strong))] text-black shadow-[0_16px_30px_rgba(var(--accent-rgb),0.18)]"
                               : "border-white/10 bg-white/[0.03] hover:border-white/30 hover:bg-white/[0.05]"
                           }`}
                         >
@@ -900,7 +900,7 @@ function ProfissionalOptionCard({ title, subtitle, selected, onClick }: { title:
       onClick={onClick}
       className={`rounded-[24px] border p-4 text-left transition ${
         selected
-          ? "border-[var(--accent)] bg-[linear-gradient(180deg,rgba(210,169,95,0.22),rgba(210,169,95,0.12))] shadow-[0_14px_28px_rgba(210,169,95,0.12)]"
+          ? "border-[var(--accent)] bg-[linear-gradient(180deg,rgba(var(--accent-rgb),0.22),rgba(var(--accent-rgb),0.12))] shadow-[0_14px_28px_rgba(var(--accent-rgb),0.12)]"
           : "border-white/10 bg-white/[0.03] hover:border-white/25 hover:bg-white/[0.05]"
       }`}
     >

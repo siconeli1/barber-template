@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useCustomerSession } from "@/lib/use-customer-session";
+import barbershop from "@/barbershop.config";
 
 const NAV_ITEMS = [
   { href: "/agendar", label: "Agendar" },
@@ -33,7 +34,7 @@ export function CustomerAccountBar() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center justify-between gap-4">
             <Link href="/" className="text-base font-semibold uppercase tracking-[0.2em] text-white sm:text-lg">
-              Imperio Ferreira
+              {barbershop.nome}
             </Link>
             <div className="flex items-center gap-3 sm:hidden">
               {primeiroNome ? (

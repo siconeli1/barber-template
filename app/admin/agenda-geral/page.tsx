@@ -12,6 +12,7 @@ import { useAutoDismissState } from "@/lib/use-auto-dismiss-state";
 import { AdminActionButton, AdminConfirmDialog, AdminToast } from "@/app/admin/_components/AdminUi";
 import { QuickAddModal } from "@/app/admin/_components/QuickAddModal";
 import { buildAgendaTimelineTimes, getAgendaTimelineRowSpan, isExtraAgendaTimelineSlot } from "@/lib/agenda-timeline";
+import barbershop from "@/barbershop.config";
 
 type BarbeiroColumn = {
   id: string;
@@ -434,7 +435,7 @@ export default function AdminAgendaGeralPage() {
               }
             `}</style>
           </div>
-          <div className="rotate-hint hidden shrink-0 items-center justify-center gap-2 border-b border-white/10 bg-[rgba(210,169,95,0.06)] px-4 py-2 text-xs text-[var(--accent-strong)]">
+          <div className="rotate-hint hidden shrink-0 items-center justify-center gap-2 border-b border-white/10 bg-[rgba(var(--accent-rgb),0.06)] px-4 py-2 text-xs text-[var(--accent-strong)]">
             <span>↻</span>
             <span>Vire o celular na horizontal para ver a agenda completa</span>
           </div>
@@ -671,7 +672,7 @@ function AgendaGeralModal({
   onCancelar: (item: AgendaItem) => void;
 }) {
   const meta = buildStatusMeta(item, agora);
-  const whatsappLink = getWhatsAppLink(item.celular_cliente, `Olá ${item.nome_cliente}, sobre seu horário na Império Ferreira.`);
+  const whatsappLink = getWhatsAppLink(item.celular_cliente, `Olá ${item.nome_cliente}, sobre seu horário na ${barbershop.nome}.`);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 backdrop-blur-sm sm:items-center" onClick={onClose}>
