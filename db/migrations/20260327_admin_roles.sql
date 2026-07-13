@@ -17,9 +17,10 @@ BEGIN
   END IF;
 END $$;
 
+-- Ajuste os ids conforme os socios do cliente (ver barbershop.config.ts).
 UPDATE public.barbeiros
 SET cargo = CASE
-  WHEN id IN ('lucas-cantelle', 'ryan-ferreira') THEN 'socio'
+  WHEN id IN ('barbeiro') THEN 'socio'
   ELSE 'barbeiro'
 END,
 updated_at = timezone('utc', now());

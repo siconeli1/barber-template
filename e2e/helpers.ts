@@ -90,8 +90,8 @@ export async function setupBookingMocks(page: Page, options: BookingMocksOptions
   await page.route("**/api/horarios**", async (route) => {
     await fulfillJson(route, {
       horarios_completos: [
-        { hora_inicio: "09:00", hora_fim: "09:30", barbeiros_disponiveis: ["cantelle", "ryan"] },
-        { hora_inicio: "09:30", hora_fim: "10:00", barbeiros_disponiveis: ["cantelle"] },
+        { hora_inicio: "09:00", hora_fim: "09:30", barbeiros_disponiveis: ["barbeiro-1", "barbeiro-2"] },
+        { hora_inicio: "09:30", hora_fim: "10:00", barbeiros_disponiveis: ["barbeiro-1"] },
       ],
       horarios: ["09:00", "09:30"],
     });
@@ -116,9 +116,9 @@ export async function setupBookingMocks(page: Page, options: BookingMocksOptions
         tipo_cobranca: tipoCobranca,
       },
       barbeiro: {
-        id: "cantelle",
-        nome: "Cantelle",
-        slug: "cantelle",
+        id: "barbeiro-1",
+        nome: "Barbeiro 1",
+        slug: "barbeiro-1",
       },
       itens: [
         {

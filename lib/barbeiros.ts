@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { verifyPassword } from "@/lib/security";
+import barbershop from "@/barbershop.config";
 
 export interface Barbeiro {
   id: string;
@@ -13,52 +14,24 @@ export interface Barbeiro {
   foto_url: string | null;
 }
 
-const BARBEIROS_AUTORIZADOS = [
-  {
-    id: "lucas-cantelle",
-    nome: "Cantelle",
-    slug: "lucas-cantelle",
-    login: "lucas",
-    cargo: "socio" as const,
-    ordem: 1,
-  },
-  {
-    id: "alexandre-albertini",
-    nome: "Xandy",
-    slug: "alexandre-albertini",
-    login: "alexandre",
-    cargo: "barbeiro" as const,
-    ordem: 2,
-  },
-  {
-    id: "ryan-ferreira",
-    nome: "Ryan",
-    slug: "ryan-ferreira",
-    login: "ryan",
-    cargo: "socio" as const,
-    ordem: 3,
-  },
-  {
-    id: "peixoto",
-    nome: "Peixoto",
-    slug: "peixoto",
-    login: "peixoto",
-    cargo: "barbeiro" as const,
-    ordem: 4,
-  },
-] as const;
+// A lista de barbeiros autorizados vem do barbershop.config.ts e funciona
+// como allowlist sobre as linhas da tabela `barbeiros`.
+const BARBEIROS_AUTORIZADOS = barbershop.barbeiros.map((barbeiro, index) => ({
+  id: barbeiro.id,
+  nome: barbeiro.nome,
+  slug: barbeiro.id,
+  login: barbeiro.login,
+  cargo: barbeiro.cargo,
+  ordem: index + 1,
+}));
 
-type BarbeiroAutorizadoId = (typeof BARBEIROS_AUTORIZADOS)[number]["id"];
-
-const BARBEIROS_AUTORIZADOS_MAP = new Map<BarbeiroAutorizadoId, (typeof BARBEIROS_AUTORIZADOS)[number]>(
-  BARBEIROS_AUTORIZADOS.map((barbeiro) => [barbeiro.id, barbeiro])
-);
+const BARBEIROS_AUTORIZADOS_MAP = new Map(BARBEIROS_AUTORIZADOS.map((barbeiro) => [barbeiro.id, barbeiro]));
 
 function filtrarBarbeirosAutorizados(barbeiros: Barbeiro[]) {
   return barbeiros
-    .filter((barbeiro) => BARBEIROS_AUTORIZADOS_MAP.has(barbeiro.id as BarbeiroAutorizadoId))
+    .filter((barbeiro) => BARBEIROS_AUTORIZADOS_MAP.has(barbeiro.id))
     .map((barbeiro) => {
-      const autorizado = BARBEIROS_AUTORIZADOS_MAP.get(barbeiro.id as BarbeiroAutorizadoId)!;
+      const autorizado = BARBEIROS_AUTORIZADOS_MAP.get(barbeiro.id)!;
       return {
         ...barbeiro,
         nome: autorizado.nome,

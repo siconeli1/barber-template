@@ -32,7 +32,7 @@ test.describe("Meus agendamentos", () => {
               valor_final: 40,
               status_agendamento: "agendado",
               status_atendimento: "pendente",
-              barbeiros: { nome: "Cantelle" },
+              barbeiros: { nome: "Barbeiro 1" },
             },
           ];
 
