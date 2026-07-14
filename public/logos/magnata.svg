@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
-  <rect width="320" height="320" rx="36" fill="#12121a"/>
-  <rect x="10" y="10" width="300" height="300" rx="28" fill="none" stroke="#7c5cff" stroke-width="4"/>
-  <text x="160" y="150" text-anchor="middle" font-family="Georgia, serif" font-size="120" font-weight="bold" fill="#9d85ff">M</text>
-  <text x="160" y="215" text-anchor="middle" font-family="Georgia, serif" font-size="28" letter-spacing="6" fill="#eef0f6">MAGNATA</text>
-  <text x="160" y="250" text-anchor="middle" font-family="Georgia, serif" font-size="18" letter-spacing="4" fill="#9aa0b5">BARBEARIA</text>
-</svg>

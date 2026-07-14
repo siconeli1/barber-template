@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   metadataBase,
   title: barbershop.nome,
   description: barbershop.descricao,
+  icons: {
+    icon: barbershop.logo,
+  },
   openGraph: {
     title: barbershop.nome,
     description: barbershop.descricao,

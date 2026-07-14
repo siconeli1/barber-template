@@ -7,58 +7,58 @@ import {
   generateCandidateStartTimes,
   generateSlots,
   reduceVisibleSlots,
+  timeToMinutes,
 } from "./agenda.ts";
+import barbershop from "../barbershop.config.ts";
 
-test("daily schedule map contains correct keys", () => {
-  assert.deepEqual(Object.keys(DAILY_SCHEDULE).sort(), ["1", "2", "3", "4", "5", "6"]);
-  assert.deepEqual(AGENDA_CONFIG.openDays, [1, 2, 3, 4, 5, 6]);
+// Os testes derivam as expectativas do barbershop.config.ts para valerem
+// em qualquer cliente do template, nao apenas na config ativa.
+const diasAbertos = Object.keys(barbershop.horarios)
+  .map(Number)
+  .sort((a, b) => a - b);
+
+test("daily schedule map matches barbershop config", () => {
+  assert.deepEqual(
+    Object.keys(DAILY_SCHEDULE).map(Number).sort((a, b) => a - b),
+    diasAbertos
+  );
+  assert.deepEqual([...AGENDA_CONFIG.openDays].sort((a, b) => a - b), diasAbertos);
 });
 
 test("generateSlots returns empty for non-working day", () => {
-  assert.deepEqual(generateSlots(0, 30), []);
+  const diaFechado = [0, 1, 2, 3, 4, 5, 6].find((dia) => !barbershop.horarios[dia]) ?? -1;
+  assert.deepEqual(generateSlots(diaFechado, 30), []);
 });
 
-test("monday to wednesday finish at 19:00 with 30-minute grid", () => {
-  const slots = generateSlots(2, 30);
-  assert.equal(slots[0]?.hora_inicio, "09:00");
+test("30-minute grid covers each open day from opening to closing", () => {
+  for (const dia of diasAbertos) {
+    const periodos = barbershop.horarios[dia];
+    const slots = generateSlots(dia, 30);
 
-  const last = slots[slots.length - 1];
-  assert.equal(last?.hora_inicio, "18:30");
-  assert.equal(last?.hora_fim, "19:00");
+    assert.equal(slots[0]?.hora_inicio, periodos[0].inicio);
+    assert.equal(slots[slots.length - 1]?.hora_fim, periodos[periodos.length - 1].fim);
+  }
 });
 
-test("60-minute service on monday to wednesday can start at 18:00 and finish at 19:00", () => {
-  const slots = generateSlots(3, 60);
-  const last = slots[slots.length - 1];
+test("60-minute service can finish exactly at closing time", () => {
+  for (const dia of diasAbertos) {
+    const periodos = barbershop.horarios[dia];
+    const slots = generateSlots(dia, 60);
+    const last = slots[slots.length - 1];
 
-  assert.equal(last?.hora_inicio, "18:00");
-  assert.equal(last?.hora_fim, "19:00");
-});
-
-test("friday starts at 08:00 and allows 60-minute service until 19:00", () => {
-  const slots = generateSlots(5, 60);
-
-  assert.equal(slots[0]?.hora_inicio, "08:00");
-  assert.deepEqual(slots[slots.length - 1], {
-    hora_inicio: "19:00",
-    hora_fim: "20:00",
-  });
-});
-
-test("saturday ends at 15:00", () => {
-  const slots = generateSlots(6, 60);
-  const last = slots[slots.length - 1];
-
-  assert.equal(last?.hora_inicio, "14:00");
-  assert.equal(last?.hora_fim, "15:00");
+    assert.equal(last?.hora_fim, periodos[periodos.length - 1].fim);
+    assert.equal(timeToMinutes(last!.hora_fim) - timeToMinutes(last!.hora_inicio), 60);
+  }
 });
 
 test("candidate starts stay on half-hour grid", () => {
-  const starts = generateCandidateStartTimes(2, 30);
+  const primeiroDia = diasAbertos[0];
+  const abertura = timeToMinutes(barbershop.horarios[primeiroDia][0].inicio);
+  const starts = generateCandidateStartTimes(primeiroDia, 30);
 
-  assert.ok(starts.includes(540));
-  assert.ok(starts.includes(570));
-  assert.ok(!starts.includes(550));
+  assert.ok(starts.includes(abertura));
+  assert.ok(starts.includes(abertura + 30));
+  assert.ok(!starts.includes(abertura + 10));
 });
 
 test("visible slots keep the half-hour grid unchanged", () => {
