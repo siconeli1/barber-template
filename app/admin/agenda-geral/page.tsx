@@ -534,14 +534,16 @@ function AgendaGridContent({
   return (
     <div
       className={`grid gap-0 overflow-hidden border border-white/10 bg-[rgba(4,7,6,0.85)] ${
-        compact ? "rounded-none" : "min-w-[980px] rounded-[28px]"
+        compact ? "rounded-none" : "rounded-[28px]"
       }`}
       style={{
         gridTemplateColumns: `${timeColW}px repeat(${barbeiros.length}, minmax(${barberColMin}px, 1fr))`,
         gridTemplateRows: `${headerRowH}px ${horarios
           .map((hora) => (isExtraAgendaTimelineSlot(hora) ? `${extraRowH}px` : `${normalRowH}px`))
           .join(" ")}`,
-        minWidth: compact ? `${timeColW + barberColMin * barbeiros.length}px` : undefined,
+        // Largura minima acompanha o numero de barbeiros: com poucos, o grid
+        // cabe na tela e o botao "Agendar" fica visivel sem rolagem lateral.
+        minWidth: `${timeColW + barberColMin * barbeiros.length}px`,
       }}
     >
       {/* Sticky corner */}

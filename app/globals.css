@@ -27,10 +27,22 @@ body {
 }
 
 .datetime-input {
+  /* Remove a aparencia nativa dos inputs de data/hora: no celular o navegador
+     desenha um fundo/contorno proprio que ignora o border-radius do container. */
+  appearance: none;
+  -webkit-appearance: none;
   color-scheme: dark;
   padding-right: 3rem;
   background-color: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
+  /* iOS encolhe inputs de data/hora vazios; garante a mesma altura dos demais campos. */
+  min-height: 3rem;
+}
+
+/* iOS centraliza o valor de data/hora por padrao. */
+.datetime-input::-webkit-date-and-time-value {
+  text-align: left;
+  margin: 0;
 }
 
 .datetime-input:hover {
@@ -112,12 +124,15 @@ button {
   transition: all 0.18s ease;
 }
 
-/* Focus visible */
+/* Focus visible: box-shadow acompanha o border-radius em todos os navegadores
+   (outline desenha um contorno quadrado em volta de campos arredondados em
+   Safari/Chrome mobile mais antigos). */
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid rgba(var(--accent-rgb), 0.65);
-  outline-offset: 1px;
+  outline: none;
+  border-color: rgba(var(--accent-rgb), 0.65);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.35);
 }
 
 button:focus-visible,
