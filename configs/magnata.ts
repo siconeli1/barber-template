@@ -1,7 +1,6 @@
 import type { BarbershopConfig } from "@/lib/barbershop-config-types";
 
-// Config de exemplo para demonstrar o template com outra marca.
-// Logo, cores e catalogo sao placeholders — troque pelos valores reais do cliente.
+// Contatos, endereco e catalogo sao placeholders — troque pelos valores reais do cliente.
 const magnata: BarbershopConfig = {
   nome: "Magnata Barbearia",
   nomeExibicao: "Magnata Barbearia",
@@ -9,19 +8,20 @@ const magnata: BarbershopConfig = {
   slug: "magnata",
   siteUrl: "https://magnata-barbearia.vercel.app",
 
-  logo: "/logos/magnata.svg",
-  ogImage: "/logos/magnata.svg",
+  logo: "/logos/logo-magnata.jpg",
+  ogImage: "/logos/logo-magnata.jpg",
 
+  // Paleta derivada da logo: fundo preto, letras brancas e detalhes laranja.
   tema: {
     cores: {
-      background: "#0a0a0f",
-      foreground: "#eef0f6",
-      surface: "#12121a",
-      surfaceStrong: "#191924",
-      muted: "#9aa0b5",
-      accent: "#7c5cff",
-      accentStrong: "#9d85ff",
-      accentDeep: "#4b34b3",
+      background: "#050505",
+      foreground: "#f5f2ec",
+      surface: "#111111",
+      surfaceStrong: "#171717",
+      muted: "#a5a09a",
+      accent: "#e87e2e",
+      accentStrong: "#f39a55",
+      accentDeep: "#a75417",
       success: "#3ecf8e",
       danger: "#ff6b6b",
     },
