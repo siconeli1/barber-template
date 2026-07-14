@@ -52,3 +52,6 @@ tmp-admin-cookie.txt
 .next-dev-demo.log
 .tmp-next-start*
 .next-dev.log
+
+.vercel
+.env*
