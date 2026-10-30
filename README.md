@@ -1,6 +1,6 @@
 # Barber Template
 
-Template de site de agendamento para barbearias (Next.js App Router), derivado do projeto da Barbearia Imperio Ferreira. Toda a marca — nome, logo, cores, fonte, servicos, precos, horarios, WhatsApp, endereco e redes sociais — vem de um unico arquivo de configuracao. Nenhum componente escreve dado de negocio direto.
+Template de site de agendamento para barbearias (Next.js App Router), hoje configurado para a **Siconeli Barbearia**, uma barbearia ficticia usada como demonstracao (sem clientes reais). Toda a marca — nome, logo, cores, fonte, servicos, precos, horarios, WhatsApp, endereco e redes sociais — vem de um unico arquivo de configuracao. Nenhum componente escreve dado de negocio direto.
 
 ## Modo demo (padrao, sem banco de dados)
 
@@ -24,7 +24,7 @@ Para producao com banco real, defina `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`
 ## Como a configuracao funciona
 
 - [`barbershop.config.ts`](barbershop.config.ts) — aponta para a config ativa (uma linha).
-- [`configs/`](configs/) — um arquivo por cliente ([`imperio-ferreira.ts`](configs/imperio-ferreira.ts) e o exemplo [`magnata.ts`](configs/magnata.ts)).
+- [`configs/`](configs/) — um arquivo por cliente (a config ativa e [`siconeli.ts`](configs/siconeli.ts)).
 - [`lib/barbershop-config-types.ts`](lib/barbershop-config-types.ts) — o tipo `BarbershopConfig` com todos os campos documentados.
 - [`public/logos/`](public/logos/) — as logos referenciadas pelo config.
 
@@ -33,7 +33,7 @@ As cores e fontes do config viram CSS variables (`--accent`, `--background`, `--
 ## Criando a demo de um novo cliente
 
 1. **Logo**: salve a logo em `public/logos/<cliente>.jpg` (ou `.svg`/`.png`).
-2. **Config**: copie `configs/magnata.ts` para `configs/<cliente>.ts` e preencha nome, `slug` (sem espacos/acentos — isola sessoes no navegador), WhatsApp, endereco, redes sociais, cores, fonte, horarios, barbeiros, servicos e planos.
+2. **Config**: copie `configs/siconeli.ts` para `configs/<cliente>.ts` e preencha nome, `slug` (sem espacos/acentos — isola sessoes no navegador), WhatsApp, endereco, redes sociais, cores, fonte, horarios, barbeiros, servicos e planos.
 3. **Ative**: em `barbershop.config.ts`, troque o import:
 
    ```ts
