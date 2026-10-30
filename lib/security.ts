@@ -27,6 +27,18 @@ export async function constantTimeEqual(a: string, b: string) {
   return timingSafeEqual(aBytes, bBytes);
 }
 
+// O agente do Telegram (n8n) se identifica com o header x-agent-key = AGENT_API_KEY.
+export async function isAgentRequest(request: Request) {
+  const expected = process.env.AGENT_API_KEY;
+  const received = request.headers.get("x-agent-key");
+
+  if (!expected || !received) {
+    return false;
+  }
+
+  return constantTimeEqual(received, expected);
+}
+
 export function isScryptHash(value: string) {
   return value.startsWith("scrypt$");
 }
