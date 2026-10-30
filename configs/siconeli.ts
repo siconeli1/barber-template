@@ -1,15 +1,15 @@
 import type { BarbershopConfig } from "@/lib/barbershop-config-types";
 
 // Contatos, endereco e catalogo sao placeholders — troque pelos valores reais do cliente.
-const magnata: BarbershopConfig = {
-  nome: "Magnata Barbearia",
-  nomeExibicao: "Magnata Barbearia",
-  descricao: "Agendamento online e area administrativa da Magnata Barbearia",
-  slug: "magnata",
-  siteUrl: "https://magnata-barbearia.vercel.app",
+const siconeli: BarbershopConfig = {
+  nome: "Siconeli Barbearia",
+  nomeExibicao: "Siconeli Barbearia",
+  descricao: "Agendamento online e area administrativa da Siconeli Barbearia",
+  slug: "siconeli",
+  siteUrl: "https://siconeli-barbearia.vercel.app",
 
-  logo: "/logos/logo-magnata.jpg",
-  ogImage: "/logos/logo-magnata.jpg",
+  logo: "/logos/logo-siconeli.jpg",
+  ogImage: "/logos/logo-siconeli.jpg",
 
   // Paleta derivada da logo: fundo preto, letras brancas e detalhes laranja.
   tema: {
@@ -32,7 +32,7 @@ const magnata: BarbershopConfig = {
   whatsapp: "+55 11 90000-0000",
   endereco: "Rua Exemplo, 123, Centro, São Paulo",
   redesSociais: {
-    instagram: "https://instagram.com/magnatabarbearia",
+    instagram: "https://instagram.com/siconelibarbearia",
   },
 
   timezone: "America/Sao_Paulo",
@@ -103,4 +103,4 @@ const magnata: BarbershopConfig = {
   ],
 };
 
-export default magnata;
+export default siconeli;
