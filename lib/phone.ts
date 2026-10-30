@@ -1,5 +1,10 @@
 export function normalizePhone(value: string | null | undefined) {
-  return String(value ?? '').replace(/\D/g, '')
+  const digits = String(value ?? '').replace(/\D/g, '')
+  // Telegram/WhatsApp mandam o DDI (55 + DDD + numero); o cadastro guarda so DDD + numero.
+  if ((digits.length === 12 || digits.length === 13) && digits.startsWith('55')) {
+    return digits.slice(2)
+  }
+  return digits
 }
 
 export function isValidPhone(phone: string) {

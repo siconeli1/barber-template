@@ -6,6 +6,7 @@ import { findBarbeiroById, listActiveBarbeiros } from "@/lib/barbeiros";
 import { findOrCreateCliente } from "@/lib/customer-auth";
 import { encontrarServicosAtivosPorIds } from "@/lib/servicos";
 import { createAgendamentoCompat } from "@/lib/agendamento-create-compat";
+import { isAgentRequest } from "@/lib/security";
 import {
   calcularValorFinalDosItens,
   decidirCoberturaServicoNoPlano,
@@ -182,7 +183,7 @@ export async function POST(req: Request) {
           status_agendamento: "agendado",
           status_atendimento: "pendente",
           status_pagamento: "pendente",
-          origem_agendamento: "site",
+          origem_agendamento: (await isAgentRequest(req)) ? "telegram" : "site",
           tipo_cobranca: tipoCobranca,
           cancelavel_ate: buildCancelavelAte(data, horaInicio),
         },

@@ -68,6 +68,8 @@ Nenhuma e necessaria no modo demo. Para producao, crie `.env.local` (ver `.env.e
 SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
 ADMIN_SESSION_SECRET=
+# opcional: chave do agente do Telegram (header x-agent-key em /api/reservar => origem "telegram")
+AGENT_API_KEY=
 ```
 
 ## Como rodar
