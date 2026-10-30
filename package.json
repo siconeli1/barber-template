@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "smoke": "node scripts/smoke-test.mjs",
+    "db:setup": "node scripts/build-setup-sql.mjs",
     "test": "tsx --test lib/*.test.ts",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",

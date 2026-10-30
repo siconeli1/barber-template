@@ -200,40 +200,4 @@ BEGIN
   END IF;
 END $$;
 
-INSERT INTO public.servicos (id, codigo, nome, duracao_minutos, preco, ativo, ordem, categoria)
-VALUES
-  ('barba', 'barba', 'Barba', 30, 30, true, 1, 'barba'),
-  ('acabamento', 'acabamento', 'Acabamento', 10, 15, true, 2, 'outro'),
-  ('cabelo-barba', 'cabelo-barba', 'Cabelo + barba', 60, 70, true, 3, 'combo'),
-  ('combo-cabelo-barba-sobrancelha', 'combo-cabelo-barba-sobrancelha', 'Combo cabelo + barba + sobrancelha', 60, 75, true, 4, 'combo'),
-  ('corte-de-cabelo', 'corte-de-cabelo', 'Corte de cabelo', 30, 40, true, 5, 'corte'),
-  ('corte-cabelo-sobrancelha', 'corte-cabelo-sobrancelha', 'Corte de cabelo + sobrancelha', 30, 50, true, 6, 'combo'),
-  ('depilacao-nariz', 'depilacao-nariz', 'Depilacao de nariz', 10, 20, true, 7, 'outro')
-ON CONFLICT (id) DO UPDATE SET
-  codigo = EXCLUDED.codigo,
-  nome = EXCLUDED.nome,
-  duracao_minutos = EXCLUDED.duracao_minutos,
-  preco = EXCLUDED.preco,
-  ativo = EXCLUDED.ativo,
-  ordem = EXCLUDED.ordem,
-  categoria = EXCLUDED.categoria,
-  updated_at = timezone('utc', now());
-
-INSERT INTO public.planos (id, nome, descricao, preco, cortes_incluidos, barbas_incluidas, sobrancelhas_incluidas, ativo, ordem)
-VALUES
-  ('bronze-corte', 'Plano Bronze Corte', '4 cortes no ciclo mensal', 100, 4, 0, 0, true, 1),
-  ('bronze-barba', 'Plano Bronze Barba', '4 barbas no ciclo mensal', 60, 0, 4, 0, true, 2),
-  ('prata', 'Plano Prata', '4 cortes e 4 sobrancelhas no ciclo mensal', 110, 4, 0, 4, true, 3),
-  ('ouro', 'Plano Ouro', '4 barbas, 4 cortes e 4 sobrancelhas por ciclo', 150, 4, 4, 4, true, 4)
-ON CONFLICT (id) DO UPDATE SET
-  nome = EXCLUDED.nome,
-  descricao = EXCLUDED.descricao,
-  preco = EXCLUDED.preco,
-  cortes_incluidos = EXCLUDED.cortes_incluidos,
-  barbas_incluidas = EXCLUDED.barbas_incluidas,
-  sobrancelhas_incluidas = EXCLUDED.sobrancelhas_incluidas,
-  ativo = EXCLUDED.ativo,
-  ordem = EXCLUDED.ordem,
-  updated_at = timezone('utc', now());
-
 COMMIT;

@@ -15,6 +15,9 @@ ALTER TABLE public.clientes
   ADD CONSTRAINT clientes_telefone_unique UNIQUE (telefone);
 
 -- 4. Remover index unico em auth_user_id (nao e mais o identificador principal)
+-- Num banco criado do zero o UNIQUE vira constraint (e nao so index), entao ela sai primeiro.
+ALTER TABLE public.clientes
+  DROP CONSTRAINT IF EXISTS clientes_auth_user_id_key;
 DROP INDEX IF EXISTS public.clientes_auth_user_id_key;
 
 -- 5. Tornar auth_user_id opcional na tabela agendamentos

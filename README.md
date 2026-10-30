@@ -11,7 +11,21 @@ Sem nenhuma variavel de ambiente o site roda em **modo demo**: clientes, agendam
 - Para resetar a demo, apague `data/demo-db.json`
 - Em hospedagem com filesystem somente leitura (ex.: Vercel), os dados vivem em memoria e resetam a cada cold start — comportamento aceitavel para demo
 
-Para producao com banco real, defina `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` e `ADMIN_SESSION_SECRET` (ver `.env.example`) e rode as migrations de `db/migrations/` — o mesmo codigo passa a usar o Supabase do cliente.
+Para producao com banco real, defina `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` e `ADMIN_SESSION_SECRET` (ver `.env.example`) e crie o banco (ver "Banco novo no Supabase") — o mesmo codigo passa a usar o Supabase do cliente.
+
+## Banco novo no Supabase
+
+1. `npm run db:setup` gera [`db/setup.sql`](db/setup.sql) juntando as migrations de [`db/migrations/`](db/migrations/) em ordem de nome.
+2. No projeto Supabase novo: **SQL Editor** → cole o `db/setup.sql` inteiro → **Run**. Ele cria as tabelas, as RPCs atomicas, liga RLS em todas as tabelas (o app usa so a `service_role`, no servidor) e cadastra o catalogo da Siconeli.
+3. Defina a senha do admin (login `admin`), trocando `SUA_SENHA`:
+
+   ```sql
+   UPDATE public.barbeiros
+   SET senha_hash = encode(extensions.digest('SUA_SENHA', 'sha256'), 'hex')
+   WHERE id = 'barbeiro';
+   ```
+
+   No primeiro login o app troca esse hash por scrypt automaticamente.
 
 ## Stack
 
@@ -44,7 +58,7 @@ As cores e fontes do config viram CSS variables (`--accent`, `--background`, `--
 5. **Confira**: `npm run dev` e revise home, /agendar e /admin.
 6. **Deploy**: crie um projeto no Vercel apontando para o repo/branch da demo. Para demo nenhuma variavel de ambiente e necessaria (opcionalmente `NEXT_PUBLIC_SITE_URL` com a URL final); para producao configure o Supabase (ver "Modo demo" acima). O `vercel.json` ja roda `npm run verify` antes de cada deploy.
 
-Para dados reais (servicos, planos, barbeiros) em producao, rode as migrations de [`db/migrations/`](db/migrations/) num projeto Supabase proprio do cliente e cadastre o catalogo nas tabelas — o config cobre a demo e o fallback.
+Para dados reais (servicos, planos, barbeiros) em producao, crie o banco num projeto Supabase proprio do cliente (ver "Banco novo no Supabase") e ajuste o catalogo nas tabelas — o config cobre a demo e o fallback.
 
 ## Variaveis de ambiente
 
