@@ -61,6 +61,14 @@ export async function GET(req: Request) {
     barbeiroId,
   });
 
+  // ?formato=compacto: so os horarios de inicio, para o agente do Telegram gastar menos tokens.
+  if (searchParams.get("formato") === "compacto") {
+    return NextResponse.json({
+      data,
+      horarios: disponibilidade.horarios.map((slot) => slot.hora_inicio),
+    });
+  }
+
   return NextResponse.json({
     data,
     duracao_total: duracaoTotal,
