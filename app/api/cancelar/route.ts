@@ -54,6 +54,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ erro: "Identificação necessária para cancelar." }, { status: 401 });
     }
 
+    // Mensagem propria para "ja cancelado": o agente do Telegram nao deve confundir com o prazo de 2h.
+    if (agendamento.status === "cancelado" || agendamento.status_agendamento === "cancelado") {
+      return NextResponse.json({ erro: "Este agendamento já está cancelado." }, { status: 409 });
+    }
+
     const podeCancelar = adminSession ? canAdminCancelAppointment(agendamento) : canCancelAppointment(agendamento);
 
     if (!podeCancelar) {
