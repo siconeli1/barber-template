@@ -201,6 +201,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ erro: message }, { status: 500 });
     }
 
+    // ?formato=compacto: so a confirmacao, para o agente do Telegram nao se perder num JSON enorme.
+    if (new URL(req.url).searchParams.get("formato") === "compacto") {
+      return NextResponse.json({
+        ok: true,
+        data,
+        hora_inicio: String(horaInicio).slice(0, 5),
+        servico: servicoResumo,
+        preco: valorFinal,
+      });
+    }
+
     return NextResponse.json({
       ok: true,
       agendamento: inserted,
